@@ -16,6 +16,26 @@ tsc --init
 ```
 
 - scripts 작성 및 테스트
+- eslint + prettier 설정
+```
+npx eslint --init
+
+√ How would you like to use ESLint? · problems
+√ What type of modules does your project use? · esm
+√ Which framework does your project use? · react
+√ The React plugin doesn't officially support ESLint v9 yet. What would you like to do? · 8.x
+√ Does your project use TypeScript? · typescript
+√ Where does your code run? · browser
+The config that you've selected requires the following dependencies:
+
+eslint@8.x, globals, @eslint/js, typescript-eslint, eslint-plugin-react
+√ Would you like to install them now? · No / Yes
+√ Which package manager do you want to use? · npm
+```
+
+```
+npm i -D prettier eslint-config-prettier eslint-plugin-prettier
+```
 
 
 ---
