@@ -1,28 +1,27 @@
-import React, { Draggable, DraggingStyle, Droppable, NotDraggingStyle } from 'react-beautiful-dnd';
-import { Item } from '../../../App';
+import React from 'react';
 import classes from './dropColumn.module.css';
+import { Draggable, DraggingStyle, Droppable, NotDraggingStyle } from 'react-beautiful-dnd';
+import { ColumnIdType, Item } from '../../../@types/DragAndDrop.types';
 
-const getItemStyle = (
-  isDragging: boolean,
-  isInvalidMove: boolean,
-  draggableStyle: DraggingStyle | NotDraggingStyle | undefined,
-) => ({
-  UserSelect: 'none',
-  background: isDragging ? (isInvalidMove ? 'red' : 'lightgreen') : '#93c5fd',
-  ...draggableStyle,
-});
-
-const getDropColumnStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? 'lightblue' : '#e5e7eb',
-});
-
-interface DropColumn {
-  id: string;
+interface DropColumnProps {
+  id: ColumnIdType;
   items: Item[];
   draggingItemId: string | null;
+  selectedItems: Item[];
+  onClick: (targetItem: Item, targetId: ColumnIdType) => void;
 }
 
-export default function DropColumn({ id, items, draggingItemId }: DropColumn) {
+export default function DropColumn({
+  id,
+  items,
+  draggingItemId,
+  selectedItems,
+  onClick,
+}: DropColumnProps) {
+  const handleClick = (targetItem: Item, targetId: ColumnIdType) => () => {
+    onClick(targetItem, targetId);
+  };
+
   return (
     <Droppable droppableId={id}>
       {(provided, snapshot) => (
@@ -45,8 +44,10 @@ export default function DropColumn({ id, items, draggingItemId }: DropColumn) {
                     style={getItemStyle(
                       snapshot.isDragging,
                       isInvalidMove,
+                      selectedItems.findIndex((sItem) => sItem.id === item.id) !== -1,
                       provided.draggableProps.style,
                     )}
+                    onClick={handleClick(item, id)}
                   >
                     {item.content}
                   </div>
@@ -60,3 +61,24 @@ export default function DropColumn({ id, items, draggingItemId }: DropColumn) {
     </Droppable>
   );
 }
+
+const getItemStyle = (
+  isDragging: boolean,
+  isInvalidMove: boolean,
+  isSelected: boolean,
+  draggableStyle: DraggingStyle | NotDraggingStyle | undefined,
+) => ({
+  UserSelect: 'none',
+  background: isDragging
+    ? isInvalidMove
+      ? 'red'
+      : 'lightgreen'
+    : isSelected
+      ? '#a5b4fc'
+      : '#93c5fd',
+  ...draggableStyle,
+});
+
+const getDropColumnStyle = (isDraggingOver: boolean) => ({
+  background: isDraggingOver ? 'lightblue' : '#e5e7eb',
+});
