@@ -5,9 +5,11 @@
 
 .dropColumn {
   width: 100%;
-  max-width: 250px;
   padding: 10px;
-  border: 1px dotted gray;
+  height: 522px;
+  max-height: 522px;
+  overflow: auto;
+  border-radius: 8px;
 }
 
 .item {

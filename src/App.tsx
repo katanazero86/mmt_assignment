@@ -3,6 +3,7 @@ import classes from './app.module.css';
 import { DragDropContext, DragUpdate, DropResult } from 'react-beautiful-dnd';
 import DropColumn from './components/DragAndDrop/DropColumn/DropColumn';
 import { ColumnIdType, Columns, Item } from './@types/DragAndDrop.types';
+import { COLUMNS_NAME } from './constants/dragAndDrop.constants';
 
 export default function App() {
   const [draggingItemId, setDraggingItemId] = useState<string | null>(null);
@@ -158,14 +159,17 @@ export default function App() {
       <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
         <section className={classes.dragAndDropSection}>
           {Object.keys(columns).map((id: string) => (
-            <DropColumn
-              key={id}
-              id={id as ColumnIdType}
-              items={columns[id]}
-              draggingItemId={draggingItemId}
-              selectedItems={selected.selectedItems}
-              onClick={toggleSelection}
-            />
+            <div className={classes.sectionItem}>
+              <h3>{COLUMNS_NAME[id as ColumnIdType]}</h3>
+              <DropColumn
+                key={id}
+                id={id as ColumnIdType}
+                items={columns[id]}
+                draggingItemId={draggingItemId}
+                selectedItems={selected.selectedItems}
+                onClick={toggleSelection}
+              />
+            </div>
           ))}
         </section>
       </DragDropContext>

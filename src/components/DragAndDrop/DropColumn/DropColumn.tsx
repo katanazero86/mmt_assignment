@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './dropColumn.module.css';
 import { Draggable, DraggingStyle, Droppable, NotDraggingStyle } from 'react-beautiful-dnd';
 import { ColumnIdType, Item } from '../../../@types/DragAndDrop.types';
+import { COLUMNS_NAME } from '../../../constants/dragAndDrop.constants';
 
 interface DropColumnProps {
   id: ColumnIdType;
