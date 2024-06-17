@@ -1,6 +1,31 @@
 # mmt_assignment
 
+- 개발환경
+```
+  System:
+    OS: Windows 11 10.0.22631
+    CPU: (16) x64 AMD Ryzen 7 7700 8-Core Processor              
+  Binaries:
+    Node: 18.18.0 
+    Yarn: 1.22.21 
+    npm: 10.2.1 
+    pnpm: 8.10.5 
+  Managers:
+    pip3: 23.2.1 
+  Utilities:
+    Git: 2.42.0.
+    Curl: 8.7.1 
+  Virtualization:
+    Docker: 26.1.1 
+    Docker Compose: 2.27.0 
+  IDEs:
+    VSCode: 1.90.0
+    webStorm: 2024.1.2
+```
+
 - 저장소 생성 및 push
+
+
 - ts 및 웹팩 설정
 ```
 npm i -D typescript ts-loader
@@ -10,12 +35,15 @@ npm i -D css-loader style-loader
 npm i -D copy-webpack-plugin html-webpack-plugin
 npm i -D @types/react @types/react-dom
 ```
+ 
 - tsconfig.json 생성
 ```
 tsc --init
 ```
 
 - scripts 작성 및 테스트
+ 
+
 - eslint + prettier 설정
 ```
 npx eslint --init
@@ -39,6 +67,16 @@ npm i -D prettier eslint-config-prettier eslint-plugin-prettier
 
 - .prettierrc.json 작성 및 eslint.config.mjs 에 prettier 설정
 
+
+- module.css 방식으로 작성   
+
+
+- 실행방법
+1. node.js 설치
+2. npm i
+3. 개발모드: npm run dev
+4. 빌드: npm run build
+5. 프로덕션모드(빌드 이후): npm run serve
 
 ---
 
