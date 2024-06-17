@@ -1,0 +1,21 @@
+.dropColumnContainer {
+  display: flex;
+  align-items: center;
+}
+
+.dropColumn {
+  background-color: #e5e7eb;
+  width: 100%;
+  max-width: 250px;
+  padding: 10px;
+  border: 1px dotted gray;
+}
+
+.item {
+  padding: 10px;
+  background-color: #93c5fd;
+
+  &:not(:first-child) {
+    margin-top: 10px;
+  }
+}

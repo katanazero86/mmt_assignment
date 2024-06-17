@@ -37,6 +37,8 @@ eslint@8.x, globals, @eslint/js, typescript-eslint, eslint-plugin-react
 npm i -D prettier eslint-config-prettier eslint-plugin-prettier
 ```
 
+- .prettierrc.json 작성 및 eslint.config.mjs 에 prettier 설정
+
 
 ---
 
