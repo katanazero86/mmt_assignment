@@ -1,3 +1,25 @@
+# mmt_assignment
+
+- 저장소 생성 및 push
+- ts 및 웹팩 설정
+```
+npm i -D typescript ts-loader
+npm i -D webpack webpack-cli webpack-dev-server
+npm i -D @babel/core @babel/preset-env @babel/preset-react babel-loader
+npm i -D css-loader style-loader
+npm i -D copy-webpack-plugin html-webpack-plugin
+npm i -D @types/react @types/react-dom
+```
+- tsconfig.json 생성
+```
+tsc --init
+```
+
+- scripts 작성 및 테스트
+
+
+---
+
 # 프론트엔드 개발 과제
 
 이 프로젝트는 Webpack 설정을 직접 구성하고, 주어진 요구사항에 따라 동작하는 드래그 앤 드롭 기능을 구현하는 과제입니다. `react-beautiful-dnd` 라이브러리를 사용하여, 지정된 드래그 제약 조건을 만족하는 애플리케이션을 만들어야 합니다. 제공되는 최소 기능의 초기 파일을 기반으로 시작하여 아래의 과제들을 수행해야 합니다.
@@ -11,7 +33,7 @@
 
 ### 1. Webpack 적용
 
-이 과제에서는 `create-react-app`의 `react-scripts` 대신 직접 Webpack 설정을 구현해야 합니다. 초기 `index.js` 파일과 `webpack.config.js` 파일을 설정하여 React 애플리케이션을 빌드할 수 있도록 합니다.
+이 과제에서는 `create-react-app`의 `react-scripts` 대신 직접 Webpack 설정을 구현해야 합니다. 초기 `index.tsx` 파일과 `webpack.config.js` 파일을 설정하여 React 애플리케이션을 빌드할 수 있도록 합니다.
 
 ### 2. 칼럼 확장
 
