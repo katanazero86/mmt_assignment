@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import classes from './app.module.css';
 import { DragDropContext, DragUpdate, DropResult } from 'react-beautiful-dnd';
 import DropColumn from './components/DragAndDrop/DropColumn/DropColumn';
 import { ColumnIdType, Columns, Item } from './@types/DragAndDrop.types';
@@ -155,13 +156,7 @@ export default function App() {
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
-        <section
-          style={{
-            display: 'flex',
-            columnGap: '8px',
-            justifyContent: 'space-around',
-          }}
-        >
+        <section className={classes.dragAndDropSection}>
           {Object.keys(columns).map((id: string) => (
             <DropColumn
               key={id}

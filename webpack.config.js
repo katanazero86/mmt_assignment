@@ -40,7 +40,7 @@ module.exports = async (env, argv) => {
               options: {
                 modules: {
                   namedExport: false,
-                  camelCase: true,
+                  exportLocalsConvention: 'camel-case-only',
                 },
               },
             },
