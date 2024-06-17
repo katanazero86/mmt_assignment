@@ -4,7 +4,6 @@
 }
 
 .dropColumn {
-  background-color: #e5e7eb;
   width: 100%;
   max-width: 250px;
   padding: 10px;
@@ -12,10 +11,9 @@
 }
 
 .item {
-  padding: 10px;
-  background-color: #93c5fd;
+  padding: 10px !important;
 
   &:not(:first-child) {
-    margin-top: 10px;
+    margin-top: 10px !important;
   }
 }

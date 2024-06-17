@@ -1,38 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  DragDropContext,
-  Draggable,
-  DraggingStyle,
-  Droppable,
-  DropResult,
-  NotDraggingStyle,
-} from 'react-beautiful-dnd';
+import { DragDropContext, DragUpdate, DropResult } from 'react-beautiful-dnd';
 import DropColumn from './components/DragAndDrop/DropColumn/DropColumn';
-
-const GRID = 8;
-
-export const getItemStyle = (
-  isDragging: boolean,
-  draggableStyle: DraggingStyle | NotDraggingStyle | undefined,
-) => ({
-  UserSelect: 'none',
-  padding: GRID * 2,
-  margin: `0 0 ${GRID}px 0`,
-  background: isDragging ? 'lightgreen' : 'grey',
-  ...draggableStyle,
-});
-
-export const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
-  padding: GRID,
-  width: 250,
-});
 
 const getItems = (count: number) =>
   Array.from({ length: count }, (v, k) => k).map((k) => ({
     id: `item-${k}`,
     content: `item ${k}`,
   }));
+
+const isEven = (targetIndex: number) => targetIndex % 2 === 0;
 
 const initialColumns: Columns = {
   column1: [],
@@ -51,6 +27,7 @@ interface Columns {
 }
 
 export default function App() {
+  const [draggingItemId, setDraggingItemId] = useState<string | null>(null);
   const [columns, setColumns] = useState(() => initialColumns);
 
   const reorder = (
@@ -77,10 +54,14 @@ export default function App() {
 
   const onDragEnd = useCallback(
     (result: DropResult) => {
+      setDraggingItemId(null);
       if (!result.destination) return;
-      console.log(result);
       const { droppableId: destinationDroppableId, index: destinationIndex } = result.destination;
       const { droppableId: sourceDroppableId, index: sourceIndex } = result.source;
+
+      if (sourceDroppableId === 'column1' && destinationDroppableId === 'column3') return; // 첫번째 컬럼에서, 세번째 컬럼으로 이동 불가능
+      if (isEven(sourceIndex) && !isEven(destinationIndex)) return; // 짝수 아이템은 다른 짝수 아이템 앞으로 이동 불가능(짝수 아이템은 홀수번째로 이동 불가능)
+
       const newColumns = reorder(
         { ...columns },
         sourceIndex,
@@ -94,6 +75,22 @@ export default function App() {
     [columns],
   );
 
+  const onDragUpdate = useCallback((update: DragUpdate) => {
+    const destination = update.destination;
+    if (destination) {
+      const { droppableId: destinationDroppableId, index: destinationIndex } = destination;
+      const sourceIndex = update.source.index;
+
+      if (isEven(sourceIndex) && !isEven(destinationIndex)) {
+        setDraggingItemId(update.draggableId);
+      } else {
+        setDraggingItemId(null);
+      }
+    } else {
+      setDraggingItemId(update.draggableId);
+    }
+  }, []);
+
   useEffect(() => {
     const newColumn1 = getItems(10);
     setColumns((prev) => {
@@ -106,32 +103,7 @@ export default function App() {
 
   return (
     <>
-      <DragDropContext onDragEnd={onDragEnd}>
-        {/*  <Droppable droppableId='droppable'>*/}
-        {/*    {(provided, snapshot) => (*/}
-        {/*      <div*/}
-        {/*        {...provided.droppableProps}*/}
-        {/*        ref={provided.innerRef}*/}
-        {/*        style={getListStyle(snapshot.isDraggingOver)}*/}
-        {/*      >*/}
-        {/*        {items.map((item, index) => (*/}
-        {/*          <Draggable key={item.id} draggableId={item.id} index={index}>*/}
-        {/*            {(provided, snapshot) => (*/}
-        {/*              <div*/}
-        {/*                ref={provided.innerRef}*/}
-        {/*                {...provided.draggableProps}*/}
-        {/*                {...provided.dragHandleProps}*/}
-        {/*                style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}*/}
-        {/*              >*/}
-        {/*                {item.content}*/}
-        {/*              </div>*/}
-        {/*            )}*/}
-        {/*          </Draggable>*/}
-        {/*        ))}*/}
-        {/*        {provided.placeholder}*/}
-        {/*      </div>*/}
-        {/*    )}*/}
-        {/*  </Droppable>*/}
+      <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
         <hr />
         <section
           style={{
@@ -141,7 +113,7 @@ export default function App() {
           }}
         >
           {Object.keys(columns).map((id: string) => (
-            <DropColumn key={id} id={id} items={columns[id]} />
+            <DropColumn key={id} id={id} items={columns[id]} draggingItemId={draggingItemId} />
           ))}
         </section>
       </DragDropContext>
